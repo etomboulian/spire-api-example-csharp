@@ -31,18 +31,19 @@ namespace ApiTest.Client
         /// List objects in resource collection
         /// </summary>
         /// <param name="start">Start offset in list</param>
-        /// <param name="limit">Limit objects returned; defaults to 100</param>
+        /// <param name="limit">Limit objects returned; defaults to 10</param>
         /// <param name="query">Search string</param>
         /// <param name="filter">Filter criteria</param>
         /// <returns></returns>
-        public List<T> List(int start = 0, int limit = 100, string query = null, object filter = null)
+        public List<T> List(int start = 0, int limit = 10, string query = null, object filter = null)
         {
             var request = new RestRequest();
+            //request.JsonSerializer = NewtonsoftJsonSerializer.Default;
 
             if (start != 0)
                 request.AddQueryParameter("start", start.ToString());
 
-            if (limit != 100)
+            if (limit != 10)
                 request.AddQueryParameter("limit", limit.ToString());
 
             if (query != null)
@@ -56,7 +57,7 @@ namespace ApiTest.Client
 
             request.RequestFormat = DataFormat.Json;
             request.Resource = BaseResource + Resource;
-            //request.RootElement = "records";
+            request.RootElement = "records";
             return Client.Execute<List<T>>(request);
         }
 

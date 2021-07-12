@@ -4,8 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using ApiTest.Client;
+using ApiTest.InventoryApi;
 
-namespace ApiTest.InventoryApi
+namespace ApiTest.Client
 {
     public class InventoryClient : BaseObjectClient<Inventory>
     {

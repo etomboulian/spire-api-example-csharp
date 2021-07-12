@@ -14,6 +14,6 @@ namespace ApiTest.InventoryApi
         public decimal onHandQty { get; set; }
         public decimal committedQty { get; set; }
         public decimal backorderQty { get; set; }
-        public Dictionary<string, UnitOfMeasure> uom { get; set; }
+        public List<UnitOfMeasure> uom { get; set; }
     }
 }
