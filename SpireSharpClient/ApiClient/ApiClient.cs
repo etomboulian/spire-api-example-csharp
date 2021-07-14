@@ -2,8 +2,10 @@ using System;
 using System.Collections.Generic;
 using System.Net;
 using Newtonsoft.Json;
+using Newtonsoft.Json.Serialization;
 using RestSharp;
 using RestSharp.Authenticators;
+using RestSharp.Serializers.NewtonsoftJson;
 
 namespace ApiTest.Client
 {
@@ -21,7 +23,6 @@ namespace ApiTest.Client
         readonly string _password;
         
         RestClient _client;
-        
 
         /// <summary>
         /// Instantiate an ApiClient
@@ -29,15 +30,15 @@ namespace ApiTest.Client
         /// <param name="company">Company short name</param>
         /// <param name="username"></param>
         /// <param name="password"></param>
-        public ApiClient(string hostname, int port, string company, string username, string password)
+        public ApiClient()
         {
-            Hostname = hostname;
-            Port = port;
-            Company = company;
-            _username = username;
-            _password = password;
+            Hostname = SpireCredentials.hostname;
+            Port = SpireCredentials.port;
+            Company = SpireCredentials.companyName;
+            _username = SpireCredentials.username;
+            _password = SpireCredentials.password;
 
-            BaseUrl = $"https://{hostname}:{port}/api/v2";
+            BaseUrl = $"https://{Hostname}:{Port}/api/v2";
 
             _client = Client();
         }
@@ -52,6 +53,8 @@ namespace ApiTest.Client
             client.BaseUrl = new Uri(BaseUrl);
             client.Authenticator = new HttpBasicAuthenticator(_username, _password);
             client.FollowRedirects = false;
+            client.UseNewtonsoftJson();
+
             return client;
         }
 

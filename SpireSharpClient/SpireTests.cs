@@ -1,11 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using ApiTest.InventoryApi;
 using ApiTest.Client;
-using System.Diagnostics;
+
 
 namespace ApiTest
 {
@@ -17,20 +14,24 @@ namespace ApiTest
         {
             InventoryClient = inventoryClient;
         }
+
         public Inventory CreateInventory( Inventory inventory)
         {
-            
             inventory = InventoryClient.Create(inventory);
+            Console.WriteLine($"Created item - ID:{inventory.id} | partNo:{inventory.partNo}");
+            Console.WriteLine();
             return inventory;
         }
 
         public void SearchInventory(string searchString)
         {
+            Console.WriteLine("Search Results: ");
             // List inventory matching the query "TEST"
             foreach (var i in InventoryClient.List(0, 100, "TEST"))
             {
-                Debug.WriteLine(i.partNo);
+                Console.WriteLine(i.partNo);
             }
+            Console.WriteLine();
         }
 
         public int? GetInventoryItemById(int? id)
@@ -38,7 +39,8 @@ namespace ApiTest
             if (id != null)
             {
                 Inventory inventory = InventoryClient.Fetch(id);
-                Debug.WriteLine($"{inventory.partNo} {inventory.onHandQty}");
+                Console.WriteLine($"Getting item by ID: ({id}) | partNo:{inventory.partNo} | description:{inventory.description} | onHandQty: {inventory.onHandQty}");
+                Console.WriteLine();
                 return inventory.id;
             }
             else
@@ -49,7 +51,9 @@ namespace ApiTest
 
         public void UpdateInventoryItemById(int? id, Inventory inventoryItem)
         {
-            if(id != null)
+            Console.WriteLine($"Updating inventory item - partNo: {inventoryItem.partNo} | description: {inventoryItem.description}");
+            Console.WriteLine();
+            if (id != null)
             {
                 InventoryClient.Update(id, inventoryItem);
             }
@@ -69,6 +73,7 @@ namespace ApiTest
             {
                 throw new ArgumentNullException("id cannot be null");
             }
+            Console.WriteLine($"Deleted item by ID: {id}");
         }
     }
 }

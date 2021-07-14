@@ -38,7 +38,7 @@ namespace ApiTest.Client
         public List<T> List(int start = 0, int limit = 10, string query = null, object filter = null)
         {
             var request = new RestRequest();
-            //request.JsonSerializer = NewtonsoftJsonSerializer.Default;
+           
 
             if (start != 0)
                 request.AddQueryParameter("start", start.ToString());
